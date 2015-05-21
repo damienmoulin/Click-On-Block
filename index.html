@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	html {
+	  height: 100%;
+	}
+	body {
+	  height: 100%;
+	  margin: 0;
+	  padding: 0;
+	}
+	.bloc{
+		position:absolute;
+	}
+	.timer{
+		color:white;
+		font-size:25px;
+		font-family: arial;
+		text-align: center;
+		margin-top:10px;
+	}
+	.score{
+		color:white;
+		font-size:25px;
+		font-family: arial;
+		text-align: center;
+		margin-top:10px;
+	}
+	.endGame{
+		width:400px;
+		height:100px;
+		background-color:#241F1F;
+		position:absolute;
+		margin:20% 40%;
+		color:white;
+		font-size:25px;
+		font-family: arial;
+		text-align: center;
+		padding-top:50px;
+		display: none;
+	}
+	.endGame a {
+		color:#FF7777;
+		font-size:25px;
+	}
+	.nav{
+		background-color:#241F1F;
+		width:80px;
+		height:100%;
+		float:left;
+	}
+	</style>
+
+</head>
+<body>
+<div class="nav">
+	<div class="timer">		
+	</div>
+	<div class="score">		
+	</div>
+</div>
+<div class="endGame">
+</div>
+<div class="bloc">
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+		var timer = 30;
+		function Timer() {
+	       timer = timer - 1;
+	       $('.timer').text('Timer '+timer);
+	       if (timer == 0){
+				return endGame();
+			}
+	       setTimeout("Timer()",1000);
+	   }
+	   Timer();
+	// Taille de l'ecran
+		var windowWidth = window.innerWidth //Récuperation taille horizontale du navigateur de l'utilisateur
+					document.documentElement.clientWidth
+					document.body.clientWidth;
+		var windowHeight = window.innerHeight //Récuperation taille verticale du navigateur de l'utilisateur
+					document.documentElement.clientHeight
+					document.body.clientHeight;
+		var a = $('.bloc').css("background-color", "blue");
+
+	//Score
+		var score = 0;
+	function endGame(){
+		$('.endGame').html('Votre Score est de :'+score+'</br><a href="">Rejouez !</a>');
+		$('.endGame').show("slow");
+		$('.bloc').hide("slow");
+	}
+
+	function tour(){
+		var taille = Math.floor(Math.random() * (400 - 50)+ 50);
+		var top =  Math.floor(Math.random() * ((windowHeight - taille) - taille)+ taille);
+		var left =  Math.floor(Math.random() * ((windowWidth - taille) - taille)+ taille);
+		$('.bloc').width(taille);
+		$('.bloc').height(taille);
+		$('.bloc').height(taille);
+		$('.bloc').css("left",left);
+		$('.bloc').css("top",top);
+
+		if (timer == 0){
+				return endGame();
+		}
+	}
+
+	function addScore(){
+		var couleur = 'rgb(' + (Math.floor((256-199)*Math.random()) + 200) + ','
+                 	+ (Math.floor((256-199)*Math.random()) + 200) + ','
+                	+ (Math.floor((256-199)*Math.random()) + 200) + ')';
+		$('.bloc').css("background-color", couleur);
+		score = score + 1;
+	    $('.score').text('Score '+score);
+
+	    if (timer == 0){
+				return endGame();
+		}
+	}
+
+	$(".bloc").click(function(){
+			if (timer == 0){
+				return endGame();
+			}
+			else{
+		     	addScore();
+		     	tour();
+		    }
+	});
+	tour();
+</script>
+</body>
+</html>
